@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -103,6 +105,9 @@ public class JFrameCambios extends javax.swing.JFrame {
         });
 
         cambiosCajaNumControl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cambiosCajaNumControlKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 cambiosCajaNumControlKeyTyped(evt);
             }
@@ -294,7 +299,7 @@ public class JFrameCambios extends javax.swing.JFrame {
     private void cambiosBtnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiosBtnGuardarCambiosActionPerformed
         modificarAlumno();
         try {
-            actualizarTabla(cambiosTabla);
+            actualizarTabla(cambiosTabla,"SELECT * FROM alumnos");
         } catch (SQLException ex) {
             Logger.getLogger(JFrameCambios.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -306,7 +311,13 @@ public class JFrameCambios extends javax.swing.JFrame {
 
     private void cambiosTablaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cambiosTablaMouseReleased
         cambiosCajaNumControl.setText((String) cambiosTabla.getValueAt(cambiosTabla.getSelectedRow(),0));
-                
+        cambiosCajaNombres.setText((String) cambiosTabla.getValueAt(cambiosTabla.getSelectedRow(),1)) ; 
+        cambiosCajaApPaterno.setText((String) cambiosTabla.getValueAt(cambiosTabla.getSelectedRow(),2)) ;
+        cambiosCajaApMaterno.setText((String) cambiosTabla.getValueAt(cambiosTabla.getSelectedRow(),3)) ;
+        cambiosSpinnerEdad.setValue((int)cambiosTabla.getValueAt(cambiosTabla.getSelectedRow(),4)) ;
+        cambiosSpinnerSemestre.setValue((int) cambiosTabla.getValueAt(cambiosTabla.getSelectedRow(),5)) ;
+        cambiosComboCarrera.setSelectedItem((String) cambiosTabla.getValueAt(cambiosTabla.getSelectedRow(),6));
+        
     }//GEN-LAST:event_cambiosTablaMouseReleased
 
     private void cambiosBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiosBtnBuscarActionPerformed
@@ -314,12 +325,7 @@ public class JFrameCambios extends javax.swing.JFrame {
     }//GEN-LAST:event_cambiosBtnBuscarActionPerformed
 
     private void cambiosCajaNumControlKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cambiosCajaNumControlKeyTyped
-         char car = evt.getKeyChar();
-        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
-        }else{
-            evt.consume();
-            getToolkit().beep();
-        }
+       
     }//GEN-LAST:event_cambiosCajaNumControlKeyTyped
 
     private void cambiosCajaNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cambiosCajaNombresKeyTyped
@@ -349,10 +355,20 @@ public class JFrameCambios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cambiosCajaApMaternoKeyTyped
 
-    public static void actualizarTabla(JTable tabla) throws SQLException {
+    private void cambiosCajaNumControlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cambiosCajaNumControlKeyReleased
+        try {
+            String a=cambiosCajaNumControl.getText();
+            
+            actualizarTabla(cambiosTabla,"SELECT * FROM Alumno WHERE numControl LIKE '%"+a+ "%'");
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameCambios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cambiosCajaNumControlKeyReleased
+
+    public static void actualizarTabla(JTable tabla,String consulta) throws SQLException {
     	String controlador="com.mysql.cj.jdbc.Driver";
     	String url="jdbc:mysql://localhost/BD_Escuela?useTimezone=true&serverTimezone=UTC";
-    	String consulta="SELECT * FROM alumnos";
+    	//String consulta="SELECT * FROM alumnos";
     	ResultSetTableModel modeloDatos=null;
 		 try {
 			modeloDatos= new ResultSetTableModel(controlador, url, consulta);
@@ -381,6 +397,9 @@ public class JFrameCambios extends javax.swing.JFrame {
                 }
 	}
 public void modificarAlumno() {
+    if(validacionEspaciosVacios(cambiosCajaNumControl,cambiosCajaNombres,cambiosCajaApPaterno,cambiosCajaApMaterno,cambiosSpinnerEdad,cambiosSpinnerSemestre,cambiosComboCarrera)){
+                    JOptionPane.showMessageDialog(getContentPane(), "Favor de llenar todos los campos!","Atención", JOptionPane.WARNING_MESSAGE);
+                }else{
 		AlumnoDAO alumnoDAO=new AlumnoDAO();
 		Alumno alumno=new Alumno();
 	         alumno.setNumControl(cambiosCajaNumControl.getText());
@@ -395,6 +414,30 @@ public void modificarAlumno() {
 		else
 			mensaje.setText("<html> <p style=\"color:red;\">NO SE PUDO MODIFICAR ALUMNO</p></html>");
 	}
+}
+
+public boolean validacionEspaciosVacios(JComponent ...componentes) {
+	boolean esVacio=false;
+	for (JComponent c : componentes) {
+	if(c instanceof JTextField) {
+            if (((JTextField) c).getText().replaceAll(" ","").equals("")) 
+            	esVacio= true;
+	}
+               
+	if(c instanceof JComboBox) {
+	    if(((JComboBox) c).getSelectedItem().toString().equals("Selecciona una opcion..."))
+	        esVacio= true;
+	    }
+        
+        if(c instanceof JSpinner) {
+            if((Integer)((JSpinner)c).getValue()==0){
+                esVacio=true;
+            }
+		}
+	    
+	}
+        return esVacio;
+  }
 	
     
     /**
@@ -429,7 +472,7 @@ public void modificarAlumno() {
             public void run() {
                 new JFrameCambios().setVisible(true);
                 try {
-                    actualizarTabla(cambiosTabla);
+                    actualizarTabla(cambiosTabla,"SELECT * FROM alumnos");
                 } catch (SQLException ex) {
                     Logger.getLogger(JFrameCambios.class.getName()).log(Level.SEVERE, null, ex);
                 }

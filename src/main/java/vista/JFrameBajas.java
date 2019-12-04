@@ -91,6 +91,9 @@ public class JFrameBajas extends javax.swing.JFrame {
         jLabel10.setText("NUMERO DE CONTROL:");
 
         bajaCajaNumControl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                bajaCajaNumControlKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 bajaCajaNumControlKeyTyped(evt);
             }
@@ -160,6 +163,11 @@ public class JFrameBajas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        bajaTabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                bajaTablaMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(bajaTabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -275,6 +283,7 @@ public class JFrameBajas extends javax.swing.JFrame {
         bajaSpinnerEdad.setValue(0);
         bajaSpinnerSemestre.setValue(0);
         bajaComboCarrera.setSelectedIndex(0);
+        mensaje.setText("");
        
     }//GEN-LAST:event_bajaButtonBorrarActionPerformed
 
@@ -291,13 +300,30 @@ public class JFrameBajas extends javax.swing.JFrame {
     }//GEN-LAST:event_BajaButtonBuscarActionPerformed
 
     private void bajaCajaNumControlKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bajaCajaNumControlKeyTyped
-         char car = evt.getKeyChar();
-        if(Character.isLetter(car) || Character.isDigit(car)){
-        }else{
-            evt.consume();
-            getToolkit().beep();
-        }
+       
+   
     }//GEN-LAST:event_bajaCajaNumControlKeyTyped
+
+    private void bajaTablaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bajaTablaMouseReleased
+        bajaCajaNumControl.setText((String) bajaTabla.getValueAt(bajaTabla.getSelectedRow(),0));
+        bajaCajaNombres.setText((String) bajaTabla.getValueAt(bajaTabla.getSelectedRow(),1)) ; 
+        bajaCajaApPaterno.setText((String) bajaTabla.getValueAt(bajaTabla.getSelectedRow(),2)) ;
+        bajaCajaApMaterno.setText((String) bajaTabla.getValueAt(bajaTabla.getSelectedRow(),3)) ;
+        bajaSpinnerEdad.setValue((int)bajaTabla.getValueAt(bajaTabla.getSelectedRow(),4)) ;
+        bajaSpinnerSemestre.setValue((int) bajaTabla.getValueAt(bajaTabla.getSelectedRow(),5)) ;
+        bajaComboCarrera.setSelectedItem((String) bajaTabla.getValueAt(bajaTabla.getSelectedRow(),6));
+        
+    }//GEN-LAST:event_bajaTablaMouseReleased
+
+    private void bajaCajaNumControlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bajaCajaNumControlKeyReleased
+         try {
+            String a=bajaCajaNumControl.getText();
+            
+            actualizarTabla(bajaTabla,"SELECT * FROM Alumno WHERE numControl LIKE '%"+a+ "%'");
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameBajas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bajaCajaNumControlKeyReleased
 public void buscarAlumno(JLabel mensaje,JTextField cajaNumControl,JTextField cajaNombres,JTextField cajaApPaterno, JTextField cajaApMaterno,JSpinner spinnerEdad, JSpinner spinnerSemestre, JComboBox comboCarrera) {
 		AlumnoDAO aDAO=new AlumnoDAO();
 		Alumno alumno= aDAO.buscarAlumno(cajaNumControl.getText());
@@ -320,7 +346,7 @@ public void eliminarAlumno() {
 		if(alumnoDAO.eliminarAlumnos(bajaCajaNumControl.getText())) {
 			mensaje.setText("<html> <p style=\"color:blue;\">SE ELIMINO ALUMNO</p></html>");
                     try {
-                        actualizarTabla(bajaTabla);
+                        actualizarTabla(bajaTabla,"SELECT * FROM alumnos");
                     } catch (SQLException ex) {
                         Logger.getLogger(JFrameBajas.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -328,10 +354,10 @@ public void eliminarAlumno() {
 		else
 			mensaje.setText("<html> <p style=\"color:red;\">NO SE PUDO ELIMINAR ALUMNO</p></html>");
 	}
-public static void actualizarTabla(JTable tabla) throws SQLException {
+public static void actualizarTabla(JTable tabla,String consulta) throws SQLException {
     	String controlador="com.mysql.cj.jdbc.Driver";
     	String url="jdbc:mysql://localhost/BD_Escuela?useTimezone=true&serverTimezone=UTC";
-    	String consulta="SELECT * FROM alumnos";
+    	//String consulta="SELECT * FROM alumnos";
     	ResultSetTableModel modeloDatos=null;
 		 try {
 			modeloDatos= new ResultSetTableModel(controlador, url, consulta);

@@ -291,6 +291,7 @@ public class JFrameConsultas extends javax.swing.JFrame {
     }//GEN-LAST:event_consultasBtnCancelarActionPerformed
 
     private void consultasBtnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultasBtnBorrarActionPerformed
+       mensaje.setText("");
         consultasCajaNombres.setText("");
         consultasCajaApPaterno.setText("");
         consultasCajaApMaterno.setText("");

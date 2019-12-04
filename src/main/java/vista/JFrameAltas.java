@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -324,6 +325,9 @@ public static void actualizarTabla(JTable tabla) throws SQLException {
 	    }
         
         if(c instanceof JSpinner) {
+            if((Integer)((JSpinner)c).getValue()==0){
+                esVacio=true;
+            }
 		}
 	    
 	}
@@ -332,7 +336,9 @@ public static void actualizarTabla(JTable tabla) throws SQLException {
   
   
     public void altaAlumno() throws SQLException {
-		
+		if(validacionEspaciosVacios(altaCajaNumControl,altaCajaNombres,altaCajaApPaterno,altaCajaApMaterno,altaSpinnerEdad,altaSpinnerSemestre,altaComboCarrera)){
+                    JOptionPane.showMessageDialog(getContentPane(), "Favor de llenar todos los campos!","Atención", JOptionPane.WARNING_MESSAGE);
+                }else{
         Alumno alumno=new Alumno();
 		AlumnoDAO alumnoDAO=new AlumnoDAO();
 	        alumno.setNumControl(altaCajaNumControl.getText());
@@ -352,6 +358,7 @@ public static void actualizarTabla(JTable tabla) throws SQLException {
 			altaMensaje.setText("<html> <p style=\"color:red;\">NO SE PUDO REALIZAR EL ALTA</p></html>");
 		actualizarTabla(altaTabla);
 	   }
+                }
 	}
 
     private void altasButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altasButtonCancelarActionPerformed
