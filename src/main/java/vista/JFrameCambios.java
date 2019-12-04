@@ -102,15 +102,33 @@ public class JFrameCambios extends javax.swing.JFrame {
             }
         });
 
+        cambiosCajaNumControl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cambiosCajaNumControlKeyTyped(evt);
+            }
+        });
+
         jLabel27.setText("NOMBRES:");
 
         jLabel26.setText("NUMERO DE CONTROL:");
+
+        cambiosCajaNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cambiosCajaNombresKeyTyped(evt);
+            }
+        });
 
         cambiosBtnGuardarCambios.setText("GUARDAR\nCAMBIOS");
         cambiosBtnGuardarCambios.setActionCommand("GUARDAR CAMBIOS");
         cambiosBtnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cambiosBtnGuardarCambiosActionPerformed(evt);
+            }
+        });
+
+        cambiosCajaApPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cambiosCajaApPaternoKeyTyped(evt);
             }
         });
 
@@ -123,13 +141,19 @@ public class JFrameCambios extends javax.swing.JFrame {
             }
         });
 
+        cambiosCajaApMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cambiosCajaApMaternoKeyTyped(evt);
+            }
+        });
+
         jLabel29.setText("APELLIDO MATERNO:");
 
         jLabel30.setText("EDAD:");
 
         jLabel31.setText("SEMESTRE:");
 
-        cambiosComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cambiosComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opcion...", "ISC", "IM", "IIA", "LC", "LA" }));
 
         jLabel32.setText("CARRERA:");
 
@@ -288,6 +312,42 @@ public class JFrameCambios extends javax.swing.JFrame {
     private void cambiosBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiosBtnBuscarActionPerformed
          buscarAlumno(mensaje,cambiosCajaNumControl,cambiosCajaNombres,cambiosCajaApPaterno,cambiosCajaApMaterno,cambiosSpinnerEdad,cambiosSpinnerSemestre,cambiosComboCarrera);
     }//GEN-LAST:event_cambiosBtnBuscarActionPerformed
+
+    private void cambiosCajaNumControlKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cambiosCajaNumControlKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_cambiosCajaNumControlKeyTyped
+
+    private void cambiosCajaNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cambiosCajaNombresKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_cambiosCajaNombresKeyTyped
+
+    private void cambiosCajaApPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cambiosCajaApPaternoKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_cambiosCajaApPaternoKeyTyped
+
+    private void cambiosCajaApMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cambiosCajaApMaternoKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_cambiosCajaApMaternoKeyTyped
 
     public static void actualizarTabla(JTable tabla) throws SQLException {
     	String controlador="com.mysql.cj.jdbc.Driver";

@@ -94,6 +94,12 @@ public class JFrameConsultas extends javax.swing.JFrame {
         buttonGroup1.add(radioNombre);
         radioNombre.setText("Nombre");
 
+        consultasCajaNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                consultasCajaNombresKeyTyped(evt);
+            }
+        });
+
         consultasBtnBuscar.setText("BUSCAR");
         consultasBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +112,18 @@ public class JFrameConsultas extends javax.swing.JFrame {
         radioApPaterno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioApPaternoActionPerformed(evt);
+            }
+        });
+
+        consultasCajaApPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                consultasCajaApPaternoKeyTyped(evt);
+            }
+        });
+
+        consultasCajaApMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                consultasCajaApMaternoKeyTyped(evt);
             }
         });
 
@@ -132,7 +150,7 @@ public class JFrameConsultas extends javax.swing.JFrame {
             }
         });
 
-        consultasComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        consultasComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opcion...", "ISC", "IM", "IIA", "LC", "LA" }));
 
         buttonGroup1.add(radioCarrera);
         radioCarrera.setText("Carrera");
@@ -316,6 +334,33 @@ public class JFrameConsultas extends javax.swing.JFrame {
            mensaje.setText("No ha seleccionado nada");
        }
     }//GEN-LAST:event_consultasBtnBuscarActionPerformed
+
+    private void consultasCajaNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consultasCajaNombresKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_consultasCajaNombresKeyTyped
+
+    private void consultasCajaApPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consultasCajaApPaternoKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_consultasCajaApPaternoKeyTyped
+
+    private void consultasCajaApMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consultasCajaApMaternoKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_consultasCajaApMaternoKeyTyped
 
     public void actualizarTabla(JTable tabla,String consulta) {
 		    	String controlador="com.mysql.cj.jdbc.Driver";

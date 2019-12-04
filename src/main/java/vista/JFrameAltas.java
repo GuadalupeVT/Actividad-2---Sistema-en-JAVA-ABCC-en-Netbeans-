@@ -9,7 +9,11 @@ import controlador.AlumnoDAO;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import modelo.Alumno;
 
 /**
@@ -85,6 +89,12 @@ public class JFrameAltas extends javax.swing.JFrame {
 
         jLabel2.setText("NUMERO DE CONTROL:");
 
+        altaCajaNumControl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                altaCajaNumControlKeyTyped(evt);
+            }
+        });
+
         altasButtonAgregar.setText("AGREGAR");
         altasButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +104,30 @@ public class JFrameAltas extends javax.swing.JFrame {
 
         jLabel3.setText("NOMBRES:");
 
+        altaCajaNombres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altaCajaNombresActionPerformed(evt);
+            }
+        });
+        altaCajaNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                altaCajaNombresKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                altaCajaNombresKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("APELLIDO PATERNO:");
+
+        altaCajaApPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                altaCajaApPaternoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                altaCajaApPaternoKeyTyped(evt);
+            }
+        });
 
         altasButtonBorrar.setText("BORRAR");
         altasButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +137,15 @@ public class JFrameAltas extends javax.swing.JFrame {
         });
 
         jLabel5.setText("APELLIDO MATERNO:");
+
+        altaCajaApMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                altaCajaApMaternoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                altaCajaApMaternoKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("EDAD:");
 
@@ -118,7 +160,7 @@ public class JFrameAltas extends javax.swing.JFrame {
 
         jLabel8.setText("CARRERA:");
 
-        altaComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        altaComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opcion...", "ISC", "IM", "IIA", "LC", "LA" }));
 
         altaTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -266,8 +308,32 @@ public static void actualizarTabla(JTable tabla) throws SQLException {
 		     }
 		 tabla.setModel(modeloDatos);
 	  }
+
+
+  public boolean validacionEspaciosVacios(JComponent ...componentes) {
+	boolean esVacio=false;
+	for (JComponent c : componentes) {
+	if(c instanceof JTextField) {
+            if (((JTextField) c).getText().replaceAll(" ","").equals("")) 
+            	esVacio= true;
+	}
+               
+	if(c instanceof JComboBox) {
+	    if(((JComboBox) c).getSelectedItem().toString().equals("Selecciona una opcion..."))
+	        esVacio= true;
+	    }
+        
+        if(c instanceof JSpinner) {
+		}
+	    
+	}
+        return esVacio;
+  }
+  
+  
     public void altaAlumno() throws SQLException {
-		Alumno alumno=new Alumno();
+		
+        Alumno alumno=new Alumno();
 		AlumnoDAO alumnoDAO=new AlumnoDAO();
 	        alumno.setNumControl(altaCajaNumControl.getText());
 		alumno.setNombre(altaCajaNombres.getText());
@@ -291,6 +357,73 @@ public static void actualizarTabla(JTable tabla) throws SQLException {
     private void altasButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altasButtonCancelarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_altasButtonCancelarActionPerformed
+
+    private void altaCajaNumControlKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altaCajaNumControlKeyTyped
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car)){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_altaCajaNumControlKeyTyped
+
+    private void altaCajaNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaCajaNombresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_altaCajaNombresActionPerformed
+
+    private void altaCajaNombresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altaCajaNombresKeyReleased
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_altaCajaNombresKeyReleased
+
+    private void altaCajaApPaternoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altaCajaApPaternoKeyReleased
+       char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_altaCajaApPaternoKeyReleased
+
+    private void altaCajaApMaternoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altaCajaApMaternoKeyReleased
+       char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_altaCajaApMaternoKeyReleased
+
+    private void altaCajaNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altaCajaNombresKeyTyped
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_altaCajaNombresKeyTyped
+
+    private void altaCajaApPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altaCajaApPaternoKeyTyped
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_altaCajaApPaternoKeyTyped
+
+    private void altaCajaApMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_altaCajaApMaternoKeyTyped
+        char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car) || car==' '){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_altaCajaApMaternoKeyTyped
 
     /**
      * @param args the command line arguments

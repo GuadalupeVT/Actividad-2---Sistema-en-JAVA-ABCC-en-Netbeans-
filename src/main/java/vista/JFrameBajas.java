@@ -90,6 +90,12 @@ public class JFrameBajas extends javax.swing.JFrame {
 
         jLabel10.setText("NUMERO DE CONTROL:");
 
+        bajaCajaNumControl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                bajaCajaNumControlKeyTyped(evt);
+            }
+        });
+
         BajaButtonBuscar.setText("BUSCAR");
         BajaButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,7 +112,11 @@ public class JFrameBajas extends javax.swing.JFrame {
 
         jLabel11.setText("NOMBRES:");
 
+        bajaCajaNombres.setEnabled(false);
+
         jLabel12.setText("APELLIDO PATERNO:");
+
+        bajaCajaApPaterno.setEnabled(false);
 
         bajaButtonEliminar.setText("ELIMINAR");
         bajaButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -122,15 +132,22 @@ public class JFrameBajas extends javax.swing.JFrame {
             }
         });
 
+        bajaCajaApMaterno.setEnabled(false);
+
         jLabel13.setText("APELLIDO MATERNO:");
 
         jLabel14.setText("EDAD:");
+
+        bajaSpinnerEdad.setEnabled(false);
+
+        bajaSpinnerSemestre.setEnabled(false);
 
         jLabel15.setText("SEMESTRE:");
 
         jLabel16.setText("CARRERA:");
 
-        bajaComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        bajaComboCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opcion...", "ISC", "IM", "IIA", "LC", "LA" }));
+        bajaComboCarrera.setEnabled(false);
 
         bajaTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -272,6 +289,15 @@ public class JFrameBajas extends javax.swing.JFrame {
     private void BajaButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BajaButtonBuscarActionPerformed
         buscarAlumno(mensaje,bajaCajaNumControl,bajaCajaNombres,bajaCajaApPaterno,bajaCajaApMaterno,bajaSpinnerEdad,bajaSpinnerSemestre,bajaComboCarrera);
     }//GEN-LAST:event_BajaButtonBuscarActionPerformed
+
+    private void bajaCajaNumControlKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bajaCajaNumControlKeyTyped
+         char car = evt.getKeyChar();
+        if(Character.isLetter(car) || Character.isDigit(car)){
+        }else{
+            evt.consume();
+            getToolkit().beep();
+        }
+    }//GEN-LAST:event_bajaCajaNumControlKeyTyped
 public void buscarAlumno(JLabel mensaje,JTextField cajaNumControl,JTextField cajaNombres,JTextField cajaApPaterno, JTextField cajaApMaterno,JSpinner spinnerEdad, JSpinner spinnerSemestre, JComboBox comboCarrera) {
 		AlumnoDAO aDAO=new AlumnoDAO();
 		Alumno alumno= aDAO.buscarAlumno(cajaNumControl.getText());
