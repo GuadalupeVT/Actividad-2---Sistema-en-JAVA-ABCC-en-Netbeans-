@@ -6,7 +6,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
-import vista.VentanaInicio;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.

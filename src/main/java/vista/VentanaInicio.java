@@ -1,20 +1,9 @@
-package vista;
-
-
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTable;
-import vista.JFrameAltas;
-import vista.JFrameBajas;
-import vista.JFrameCambios;
-import vista.JFrameConsultas;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package vista;
 
 /**
  *
@@ -38,7 +27,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jInternalFrame3 = new javax.swing.JInternalFrame();
+        escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -46,20 +35,19 @@ public class VentanaInicio extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
-        jInternalFrame3.setVisible(true);
-
-        javax.swing.GroupLayout jInternalFrame3Layout = new javax.swing.GroupLayout(jInternalFrame3.getContentPane());
-        jInternalFrame3.getContentPane().setLayout(jInternalFrame3Layout);
-        jInternalFrame3Layout.setHorizontalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jInternalFrame3Layout.setVerticalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("VentanaInicio");
+
+        javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
+        escritorio.setLayout(escritorioLayout);
+        escritorioLayout.setHorizontalGroup(
+            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 560, Short.MAX_VALUE)
+        );
+        escritorioLayout.setVerticalGroup(
+            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 411, Short.MAX_VALUE)
+        );
 
         jMenu1.setText("Alumnos");
 
@@ -96,7 +84,6 @@ public class VentanaInicio extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
-        jMenu1.getAccessibleContext().setAccessibleDescription("");
 
         setJMenuBar(jMenuBar1);
 
@@ -104,73 +91,40 @@ public class VentanaInicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 2125, Short.MAX_VALUE)
+            .addComponent(escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 731, Short.MAX_VALUE)
+            .addComponent(escritorio)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        JFrameAltas altas = new  JFrameAltas();
-        JTable tabla= altas.altaTabla;
-        try {
-            actualizarTabla(tabla);
-        } catch (SQLException ex) {
-            Logger.getLogger(VentanaInicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        altas.setVisible(true);
+         JInternalFrameAltas altas = new JInternalFrameAltas();
+        escritorio.add(altas);
+        altas.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        JFrameBajas bajas = new  JFrameBajas();
-        JTable tabla2= bajas.bajaTabla;
-        try {
-            actualizarTabla(tabla2);
-        } catch (SQLException ex) {
-            Logger.getLogger(VentanaInicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        bajas.setVisible(true);
+        JInternalFrameBajas bajas = new JInternalFrameBajas();
+        escritorio.add(bajas);
+        bajas.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        JFrameCambios cambios= new  JFrameCambios();
-        JTable tabla3 = cambios.cambiosTabla;
-        try {
-            actualizarTabla(tabla3);
-        } catch (SQLException ex) {
-            Logger.getLogger(VentanaInicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        cambios.setVisible(true);
+       JInternalFrameCambios cambios = new JInternalFrameCambios();
+        escritorio.add(cambios);
+        cambios.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        JFrameConsultas consultas= new  JFrameConsultas();
-        JTable tabla4 = consultas.consultasTabla;
-        try {
-            actualizarTabla(tabla4);
-        } catch (SQLException ex) {
-            Logger.getLogger(VentanaInicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        consultas.setVisible(true);
+        JInternalFrameConsultas consultas= new JInternalFrameConsultas();
+        escritorio.add(consultas);
+        consultas.show();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-public static void actualizarTabla(JTable tabla) throws SQLException {
-    	String controlador="com.mysql.cj.jdbc.Driver";
-    	String url="jdbc:mysql://localhost/BD_Escuela?useTimezone=true&serverTimezone=UTC";
-    	String consulta="SELECT * FROM alumnos";
-    	ResultSetTableModel modeloDatos=null;
-		 try {
-			modeloDatos= new ResultSetTableModel(controlador, url, consulta);
-		 } catch (ClassNotFoundException e) {
-			  e.printStackTrace();
-		    } catch (SQLException e) {
-		    	e.printStackTrace();
-		     }
-		 tabla.setModel(modeloDatos);
-	  }
+
     /**
      * @param args the command line arguments
      */
@@ -207,7 +161,7 @@ public static void actualizarTabla(JTable tabla) throws SQLException {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JInternalFrame jInternalFrame3;
+    private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
