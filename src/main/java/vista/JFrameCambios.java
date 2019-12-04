@@ -286,13 +286,19 @@ public class JFrameCambios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cambiosBtnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiosBtnBorrarActionPerformed
-        cambiosCajaNumControl.setText("");
-        cambiosCajaNombres.setText("");
-        cambiosCajaApPaterno.setText("");
-        cambiosCajaApMaterno.setText("");
-        cambiosSpinnerEdad.setValue(0);
-        cambiosSpinnerSemestre.setValue(0);
-        cambiosComboCarrera.setSelectedIndex(0);        
+        try {
+            cambiosCajaNumControl.setText("");
+            cambiosCajaNombres.setText("");
+            cambiosCajaApPaterno.setText("");
+            cambiosCajaApMaterno.setText("");
+            cambiosSpinnerEdad.setValue(0);
+            cambiosSpinnerSemestre.setValue(0);
+            cambiosComboCarrera.setSelectedIndex(0);
+            mensaje.setText("");
+            actualizarTabla(cambiosTabla,"SELECT * FROM alumnos");
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameCambios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_cambiosBtnBorrarActionPerformed
 
     
@@ -359,7 +365,7 @@ public class JFrameCambios extends javax.swing.JFrame {
         try {
             String a=cambiosCajaNumControl.getText();
             
-            actualizarTabla(cambiosTabla,"SELECT * FROM Alumno WHERE numControl LIKE '%"+a+ "%'");
+            actualizarTabla(cambiosTabla,"SELECT * FROM Alumnos WHERE numControl LIKE '%"+a+ "%'");
         } catch (SQLException ex) {
             Logger.getLogger(JFrameCambios.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -430,7 +436,7 @@ public boolean validacionEspaciosVacios(JComponent ...componentes) {
 	    }
         
         if(c instanceof JSpinner) {
-            if((Integer)((JSpinner)c).getValue()==0){
+            if((Integer)((JSpinner)c).getValue()<=0){
                 esVacio=true;
             }
 		}

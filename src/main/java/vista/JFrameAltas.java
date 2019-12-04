@@ -294,6 +294,7 @@ public class JFrameAltas extends javax.swing.JFrame {
         altaSpinnerEdad.setValue(0);
         altaSpinnerSemestre.setValue(0);
         altaComboCarrera.setSelectedIndex(0);
+        altaMensaje.setText("");
     }//GEN-LAST:event_altasButtonBorrarActionPerformed
 public static void actualizarTabla(JTable tabla) throws SQLException {
     	String controlador="com.mysql.cj.jdbc.Driver";
@@ -325,7 +326,7 @@ public static void actualizarTabla(JTable tabla) throws SQLException {
 	    }
         
         if(c instanceof JSpinner) {
-            if((Integer)((JSpinner)c).getValue()==0){
+            if((Integer)((JSpinner)c).getValue()<=0){
                 esVacio=true;
             }
 		}

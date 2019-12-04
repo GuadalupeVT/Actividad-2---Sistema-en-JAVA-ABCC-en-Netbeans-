@@ -8,6 +8,7 @@ package vista;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -298,6 +299,7 @@ public class JFrameConsultas extends javax.swing.JFrame {
         consultasSpinnerEdad.setValue(0);
         consultasSpinnerSemestre.setValue(0);
         consultasComboCarrera.setSelectedIndex(0);
+        actualizarTabla(consultasTabla, "SELECT * FROM Alumnos");
     }//GEN-LAST:event_consultasBtnBorrarActionPerformed
 
     private void consultasBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultasBtnBuscarActionPerformed
@@ -332,7 +334,7 @@ public class JFrameConsultas extends javax.swing.JFrame {
            actualizarTabla(consultasTabla,sql);
 			
 	}else{
-           mensaje.setText("No ha seleccionado nada");
+          JOptionPane.showMessageDialog(getContentPane(), "No se selecciono opcion de busqueda!","Atención", JOptionPane.WARNING_MESSAGE);
        }
     }//GEN-LAST:event_consultasBtnBuscarActionPerformed
 

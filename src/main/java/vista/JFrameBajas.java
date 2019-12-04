@@ -276,14 +276,19 @@ public class JFrameBajas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bajaButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajaButtonBorrarActionPerformed
-        bajaCajaNumControl.setText("");
-        bajaCajaNombres.setText("");
-        bajaCajaApPaterno.setText("");
-        bajaCajaApMaterno.setText("");
-        bajaSpinnerEdad.setValue(0);
-        bajaSpinnerSemestre.setValue(0);
-        bajaComboCarrera.setSelectedIndex(0);
-        mensaje.setText("");
+        try {
+            bajaCajaNumControl.setText("");
+            bajaCajaNombres.setText("");
+            bajaCajaApPaterno.setText("");
+            bajaCajaApMaterno.setText("");
+            bajaSpinnerEdad.setValue(0);
+            bajaSpinnerSemestre.setValue(0);
+            bajaComboCarrera.setSelectedIndex(0);
+            mensaje.setText("");
+            actualizarTabla(bajaTabla,"SELECT * FROM alumnos");
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameBajas.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
     }//GEN-LAST:event_bajaButtonBorrarActionPerformed
 
@@ -319,7 +324,7 @@ public class JFrameBajas extends javax.swing.JFrame {
          try {
             String a=bajaCajaNumControl.getText();
             
-            actualizarTabla(bajaTabla,"SELECT * FROM Alumno WHERE numControl LIKE '%"+a+ "%'");
+            actualizarTabla(bajaTabla,"SELECT * FROM Alumnos WHERE numControl LIKE '%"+a+ "%'");
         } catch (SQLException ex) {
             Logger.getLogger(JFrameBajas.class.getName()).log(Level.SEVERE, null, ex);
         }
